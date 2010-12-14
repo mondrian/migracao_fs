@@ -33,5 +33,6 @@ for a in arquivos:
     except psycopg2.Error as erro:
         print """Erro co copiar tabela %s""" % (nome_tabela)
         c.execute("""update log_importacao set fim = current_timestamp, erro = '%s' where tabela = '%s' """ % (erro, nome_tabela)) 
-
+    finally:
+				c.execute("""alter table %s enable trigger all""" % (nome_tabela))
 
